@@ -1,5 +1,6 @@
 <?php
 use Derp\ER;
+use Derp\Infrastructure\PatientRepository;
 
 $container = require_once __DIR__ . '/di.php';
 /** @var \Doctrine\ORM\EntityManager $entityManager */
@@ -14,5 +15,7 @@ $personalInformation = ER\PersonalInformation::fromDetails($fullName, $dateOfBir
 $patient = ER\Patient::walkIn($personalInformation, 'Test full info');
 
 
-$entityManager->persist($patient);
+$repository = $entityManager->getRepository('Derp\ER\Patient');
+
+$repository->add($patient);
 $entityManager->flush();

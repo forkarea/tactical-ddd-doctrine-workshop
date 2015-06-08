@@ -3,19 +3,20 @@
 namespace Derp\ER;
 
 use Doctrine\ORM\Mapping as ORM;
+use Derp\Infrastructure\PatientRepository;
 
 /**
  * Class patient
  *
- * @ORM\Entity
- * @package Derp\ER
+ * @ORM\Entity(repositoryClass="Derp\Infrastructure\PatientRepository")
  */
 class Patient
 {
     /**
      * @var int
      *
-     * @ORM\Id() @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      */
     private $id;
