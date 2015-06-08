@@ -12,7 +12,7 @@ use DateInterval;
 class BirthDate
 {
     /**
-     * @ORM\Column(type="datetime_immutable", name="birthDate")
+     * @ORM\Column(type="date", name="birthDate")
      * @var DateTimeImmutable
      */
     private $date;

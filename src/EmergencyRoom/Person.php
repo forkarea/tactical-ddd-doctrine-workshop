@@ -3,6 +3,7 @@
 namespace EmergencyRoom;
 
 use Doctrine\ORM\Mapping as ORM;
+use Derp\ER;
 
 /**
  * Class patient
@@ -19,6 +20,11 @@ class Person
      * @ORM\GeneratedValue()
      */
     private $id;
+
+    /**
+     * @var ER\PersonalInformation
+     */
+    private $personalInformation;
 
     /**
      * @var string

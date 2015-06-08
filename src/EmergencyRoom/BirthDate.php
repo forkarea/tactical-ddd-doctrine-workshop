@@ -7,51 +7,47 @@ class BirthDate
     /**
      * The stored birth date.
      *
-     * @var DateTime
+     * @ORM\Column(type="datetime", name="birthDate")
+     * @var \DateTimeImmutable
      */
     private $birthDate;
 
     /**
      * Construct a new Birthdate.
      *
-     * @param string $date
-     *      Date as YYYY-MM-DD
+     * @param \DateTimeImmutable $date
      */
-    public function __construct($date)
+    public function __construct(\DateTimeImmutable $date)
     {
-        $this->birthDate = new \DateTimeImmutable($date);
+        $this->birthDate = $date;
+    }
+
+    public static function fromYearMonthDayFormat($yearMonthDay)
+    {
+        return new BirthDate(
+            DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $yearMonthDay .' 00:00:00')
+        );
     }
 
     /**
-     * Create from iso date format.
-     *
-     * @param string $date
-     *     Date as YYY-MM-DD
-     *
-     * @return BirthDate
-     */
-    public static function fromString($date)
-    {
-        return new BirthDate($date);
-    }
-
-    /**
-     * Get the value.
-     *
+     * @param integer $age
      * @return DateTimeImmutable
      */
-    public function value()
+    public static function fromEstimatedAge($age)
     {
-        return $this->birthDate;
+        return new static(
+            (new DateTimeImmutable('now'))->sub(new \DateInterval("P{$age}Y"))
+        );
     }
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function getCurrentAge()
     {
-        return $this->birthDate->format('Y-M-d');
+        $diff = $this->date->diff(new DateTimeImmutable('now'));
+        return $diff->format('Y');
+    }
+
+    public function toDateTime()
+    {
+        return $this->date;
     }
 }

@@ -1,15 +1,18 @@
 <?php
+use Derp\ER;
+
 $container = require_once __DIR__ . '/di.php';
 /** @var \Doctrine\ORM\EntityManager $entityManager */
 $entityManager = $container['entity_manager'];
 
 
-$person1 = EmergencyRoom\Person::announce('Test announce');
-$entityManager->persist($person1);
+$fullName = ER\FullName::fromParts('Peter', 'Decuyper');
+$dateOfBirth = ER\BirthDate::fromYearMonthDayFormat('1974-07-28');
+$sex = new ER\Sex(ER\Sex::MALE);
+$personalInformation = ER\PersonalInformation::fromDetails($fullName, $dateOfBirth, $sex);
 
-$person2 = EmergencyRoom\Person::walkIn('Test walk-in');
-$entityManager->persist($person2);
+$patient = ER\Patient::walkIn($personalInformation, 'Test full info');
 
+
+$entityManager->persist($patient);
 $entityManager->flush();
-
-
