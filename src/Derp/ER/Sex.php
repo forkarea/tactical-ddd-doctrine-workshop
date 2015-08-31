@@ -20,6 +20,11 @@ class Sex
      */
     private $value;
 
+    /**
+     * Construct object from given value.
+     *
+     * @param $sex
+     */
     public function __construct($sex)
     {
         if ($sex !== static::MALE && $sex !== static::FEMALE && $sex !== static::INTERSEX) {
@@ -29,6 +34,13 @@ class Sex
         $this->value = $sex;
     }
 
+    /**
+     * Helper to compare another Sex value object with the value of this one.
+     *
+     * @param Sex $otherSex
+     *
+     * @return bool
+     */
     public function equals(Sex $otherSex)
     {
         return $this->value === $otherSex->value;

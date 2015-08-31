@@ -28,28 +28,39 @@ class Patient
     private $personalInformation;
 
     /**
-     * @var string
+     * What are the patients symptoms.
      *
      * @ORM\Column(type="string", nullable=TRUE)
+     *
+     * @var string
      */
     private $indication = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
+     *
+     * @var bool
      */
     private $arrived = false;
+
+    /**
+     * No public constructor.
+     */
+    private function __construct()
+    {
+    }
 
 
     /**
      * Create a new announced person.
      *
+     * @param PersonalInformation $personalInformation
      * @param string $indication
-     *
-     * @return Person
+     * @return Patient
      */
-    public static function announce(PersonalInformation $personalInformation, $indication)
+    public static function announce(
+        PersonalInformation $personalInformation, $indication
+    )
     {
         $patient = new Patient();
         $patient->personalInformation = $personalInformation;
@@ -58,13 +69,18 @@ class Patient
     }
 
     /**
+     * Patient walked in himself.
      *
+     * @param PersonalInformation $personalInformation
+     * @param string $indication
+     * @return Patient
      */
-    public static function walkIn(PersonalInformation $personalInformation, $indication)
+    public static function walkIn(
+        PersonalInformation $personalInformation, $indication
+    )
     {
         $patient = static::announce($personalInformation, $indication);
         $patient->arrived = true;
-
         return $patient;
     }
 

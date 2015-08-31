@@ -27,6 +27,8 @@ class PersonalInformation
     private $sex;
 
     /**
+     * Constructor can not be called directly.
+     *
      * @param FullName $name
      * @param BirthDate $dateOfBirth
      * @param Sex $sex
@@ -39,10 +41,13 @@ class PersonalInformation
     }
 
     /**
+     * We know who the patient is.
+     *
      * @param FullName $name
      * @param BirthDate $date
      * @param Sex $sex
-     * @return static
+     *
+     * @return PersonalInformation
      */
     public static function fromDetails(FullName $name, BirthDate $date, Sex $sex)
     {
@@ -50,22 +55,21 @@ class PersonalInformation
     }
 
     /**
+     * We don't know who the person is.
+     *
      * @param Sex $sex
      * @param int $estimatedAge
-     * @return static
+     *
+     * @return PersonalInformation
      */
     public static function anonymous(Sex $sex, $estimatedAge)
     {
-        $name = FullName::fromParts('John', 'Doe');
-        if ($sex->isFemale()) {
-            $name = FullName::fromParts('Jane', 'Doe');
-        }
+        $fullName = ($sex->isFemale())
+            ? new FullName('Jane', 'Doe')
+            : new FullName('John', 'Doe');
+        $birthDate = BirthDate::fromEstimatedAge($estimatedAge);
 
-        return new static(
-            $name,
-            BirthDate::fromEstimatedAge($estimatedAge),
-            $sex
-        );
+        return new static($fullName, $birthDate, $sex);
     }
 
     /**

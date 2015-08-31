@@ -19,3 +19,8 @@ $repository = $entityManager->getRepository('Derp\ER\Patient');
 
 $repository->add($patient);
 $entityManager->flush();
+
+
+
+echo 'Done!';
+echo PHP_EOL;
